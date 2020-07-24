@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>swiper版本</title>
+	<meta charset="utf-8">	
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="swiper.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		img{
+			width:100%;
+			line-height:0;
+			font-size: 0;
+		}
+
+		#TouchNav{ width:100%; overflow:hidden; border-bottom:1px solid #f8f8f8;}
+		#TouchNav .swiper-slide{ 
+			width:3rem;
+			padding: 5px 5px;
+			letter-spacing:2px;
+			text-align:center;
+		}
+		#TouchNav .swiper-slide span{
+			transition:all .3s ease;
+			display:block;
+		}
+		#TouchNav .active span{
+			transform:scale(1.1);
+			color:#FF2D2D;
+		}
+
+		</style>
+	<!-- <script type="text/javascript" src="jquery.js"></script> -->
+	<script type="text/javascript" src="swiper.js"></script>
+</head>
+<body>
+	<img src="img/img01.png">
+	<div id="TouchNav">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide active"><span>推荐</span></div>
+			<div class="swiper-slide"><span>热点</span></div>
+			<div class="swiper-slide"><span>深圳</span></div>
+			<div class="swiper-slide"><span>视频</span></div>
+			<div class="swiper-slide"><span>社会</span></div>
+			<div class="swiper-slide"><span>娱乐</span></div>
+			<div class="swiper-slide"><span>科技</span></div>
+			<div class="swiper-slide"><span>问答</span></div>
+			<div class="swiper-slide"><span>汽车</span></div>
+			<div class="swiper-slide"><span>财经</span></div>
+			<div class="swiper-slide"><span>军事</span></div>
+			<div class="swiper-slide"><span>体育</span></div>
+			<div class="swiper-slide"><span>段子</span></div>
+			<div class="swiper-slide"><span>美女</span></div>
+			<div class="swiper-slide"><span>国际</span></div>
+			<div class="swiper-slide"><span>趣图</span></div>
+			<div class="swiper-slide"><span>健康</span></div>
+			<div class="swiper-slide"><span>特产</span></div>
+			<div class="swiper-slide"><span>房产</span></div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var TouchNav = new Swiper('#TouchNav', {
+		freeMode: true,
+		freeModeMomentumRatio: 0.5,
+		centeredSlides : true,
+		centeredSlidesBounds:true,
+		slidesPerView: 'auto',
+		on:{
+			tap:function(){
+				document.querySelector('#TouchNav .active').classList.remove('active');
+				document.querySelectorAll('#TouchNav .swiper-slide')[this.clickedIndex].classList.add('active');
+				// $("#TouchNav  .active").removeClass('active');
+				// $("#TouchNav .swiper-slide").eq(this.clickedIndex).addClass('active');
+				 TouchNav.slideTo(this.clickedIndex);
+			}
+		}
+	});
+</script>
+</html>

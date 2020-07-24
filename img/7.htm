@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://192.168.0.104:6700/7.html# -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+</head>
+<body style="">
+	<div class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-ios" id="swiper_header">
+	    <div class="swiper-wrapper" v-model="active">
+	        <div class="swiper-slide swiper-slide-visible swiper-slide-active">Slide 1</div>
+	        <div class="swiper-slide swiper-slide-visible swiper-slide-next">Slide 2</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 3</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 4</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 5</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 6</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 7</div>
+	        <div class="swiper-slide swiper-slide-visible">Slide 8</div>
+		</div>
+ 	<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+	<div class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-ios" id="swiper_content">
+	    <div class="swiper-wrapper">
+	        <div class="swiper-slide swiper-slide-active" style="width: 964px;">Slide 1</div>
+	        <div class="swiper-slide swiper-slide-next" style="width: 964px;">Slide 2</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 3</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 4</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 5</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 6</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 7</div>
+	        <div class="swiper-slide" style="width: 964px;">Slide 8</div>
+	    </div>
+	<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+
+<script type="text/javascript" src="./7_files/jquery.js"></script>
+<script type="text/javascript" src="./7_files/swiper.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    var header = new Swiper('#swiper_header',{
+        	watchSlidesProgress : true,
+        	watchSlidesVisibility : true,
+        	slidesPerView :'auto',
+        	onTap: function(){
+          		content.slideTo( header.clickedIndex)
+        	}
+      	});
+
+
+        var content = new Swiper('#swiper_content',{
+        	longSwipesRatio : 0.1,
+	        onSlideChangeStart: function(){
+	          	updateNavPosition()
+	        }
+        });
+ 
+      function updateNavPosition(){
+        $('.mint-tab-item.is-selected').removeClass('is-selected ')
+        var activeNav = $('.mint-tab-item').eq(content.activeIndex).addClass('is-selected ');
+          if (!activeNav.hasClass('swiper-slide-visible')) {
+              console.log(1);
+              if (activeNav.index()>header.activeIndex) {
+                  console.log(2);
+                  var thumbsPerNav = Math.floor(header.width/(activeNav.width()*2.5))-1
+                  header.slideTo(activeNav.index()-thumbsPerNav)
+                  console.log(thumbsPerNav);
+              }
+              else {
+                  console.log(3);
+                  header.slideTo(activeNav.index())
+              }
+          }
+      }
+    
+</script>
+</body></html>

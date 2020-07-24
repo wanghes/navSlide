@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 0;
+            }
+            html,body{
+                width:100%;
+            }
+            .header {
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                overflow-x: scroll;
+                position: relative;
+                height: 50px;
+            }
+            .header::-webkit-scrollbar {
+                display: none;
+            }
+            .inner{
+                position: absolute;
+                left: 0;
+               /* transition: all .3s linear;*/
+            }
+            .nav{
+                position: relative;
+                white-space: nowrap;
+                font-size: 0;
+            }
+            .item {
+                display: inline-block;
+                box-sizing: border-box;
+                text-align: center;
+                width: 60px;
+                height: 50px;
+                line-height: 50px; 
+                font-size: 14px;
+            }
+          
+            .active{
+                background-color: red;
+                color: #fff;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="header">
+            <div class="inner">
+                <ul class="nav">
+                    <li class="item active">推荐</li>
+                    <li class="item">视频</li>
+                    <li class="item">新闻</li>
+                    <li class="item">体育</li>
+                    <li class="item">社会</li>
+                    <li class="item">娱乐</li>
+                    <li class="item">军事</li>
+                    <li class="item">人文</li>
+                    <li class="item">地理</li>
+                    <li class="item">历史</li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            window.onload = function() {
+                var items = document.querySelectorAll('.item');
+                var itemWidth = items[0].offsetWidth;
+                var winWidth = window.innerWidth;
+                var inner = document.querySelector('.inner');
+
+                var halfWidth = (winWidth - itemWidth)/2;
+                
+                function removeActiveClass() {
+                    for (var i = 0; i < items.length; i ++) {
+                        items[i].classList.remove('active')
+                    }
+                }
+
+                for (var i = 0; i < items.length; i ++) {
+                    items[i].ontouchend = (function() {
+                        var num = i;
+                        return function() {
+                    
+                            var navWidth = document.querySelector('.nav').offsetWidth;
+                            var moveDistance;
+                            var positionLeft = this.offsetLeft;
+                            console.log(navWidth)
+
+                            removeActiveClass();
+                            this.classList.add('active');
+                    
+
+                            if (positionLeft < halfWidth) {
+                                moveDistance = 0;
+                            } else if (halfWidth - positionLeft < winWidth - navWidth) {
+                                moveDistance =  winWidth - navWidth
+                            } else {
+                                moveDistance = halfWidth - positionLeft;
+                            }
+
+                            inner.style.left = moveDistance + "px"
+
+                           
+                        }
+                    })();
+                }
+
+
+               
+
+                var ty_left = 0;
+                var navWidth = document.querySelector('.nav').offsetWidth;
+         
+                inner.ontouchstart = function(e) {
+          
+                    var touch1 = e.touches[0] || e.targetTouches[0] || e.originalEvent.targetTouches[0];
+                    x1 = touch1.pageX;
+                    y1 = touch1.pageY;
+
+                    ty_left = parseInt(this.offsetLeft);
+                };
+
+                inner.ontouchmove = function(e) {
+                    var touch2 = e.touches[0] || e.targetTouches[0] || e.originalEvent.targetTouches[0];
+                    var that = this;
+                    //setTimeout(function() {
+                    var x2 = touch2.pageX;
+                    var y2 = touch2.pageY;
+                    if (ty_left + x2 - x1 >= 0) {
+                        that.style.left = "0px";
+                    } else if (ty_left + x2 - x1 <= winWidth - navWidth) {
+                        that.style.left = (winWidth - navWidth)+ "px";
+                    } else {
+                        that.style.left = (ty_left + x2 - x1) + "px";
+                    }
+                    if (Math.abs(y2 - y1) > 0) {
+                        //e.preventDefault();
+                    }
+                   // }, 300)
+                   
+                };
+
+            }
+        </script>
+    </body>
+</html>
